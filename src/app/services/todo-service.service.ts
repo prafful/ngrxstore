@@ -1,5 +1,8 @@
 import { Injectable } from '@angular/core';
 import {Todo} from '../todo/todo'
+
+import {Store} from '@ngrx/store'
+
  
 @Injectable({
   providedIn: 'root'
@@ -9,20 +12,34 @@ export class todoServiceService {
   public lastTodoId:number = 0
   public alltodos: Todo[] = []
 
-  constructor() { }
+  constructor(private store:Store<any>) {
 
-  public addTodo(todo:Todo): todoServiceService{
-    if(!todo.id){
+      store.select('alltodosfromreducer').subscribe( 
+        todo =>{
+        this.alltodos = todo
+      })
+
+
+   }
+
+  public addTodo(todo:Todo):void{
+    /* if(!todo.id){
       todo.id = ++this.lastTodoId      
     }
     this.alltodos.push(todo)
     console.log("from service - addtodo")
     console.log(this.alltodos)
-    /* //console.log(this.alltodos.filter((onetodo) => {
-                                                    onetodo.status === false
-                                                    return onetodo
-                                                  })); */
-    return this
+    
+    return this */
+    this.store.dispatch({
+        type:'ADD_TODO',
+        payload:{
+          id: ++this.lastTodoId,
+          title: todo.title,
+          status: todo.status
+        }
+    })
+
   }
 
   public getPendingTodo():Todo[]{
@@ -31,38 +48,23 @@ export class todoServiceService {
     return this.alltodos.filter(onetodo =>onetodo.status === false)
   }
 
-  public toggleTodo(todo:Todo){
-    console.log(todo);
-    let updatedtodo = this.updatetodobyid(todo.id, {
-                                                      status:!todo.status
-                                                    })
-
-    console.log(updatedtodo);     
-    return updatedtodo                                      
-  }
-
-  private updatetodobyid(id: number, values:Object ={}):Todo{
-
-    let todo = this.gettodobyid(id)
-    if(!todo){
-      return null
-    }
-    Object.assign(todo, values)
-    return todo
-
-  }
-
-  private gettodobyid(id:number):Todo{
-    return this.alltodos.filter(todo => todo.id === id).pop()
+  public toggleTodo(todoid:number){
+    console.log(todoid);
+    this.store.dispatch({
+      type:'TOGGLE',
+      payload:{id: todoid}
+    })                                  
   }
 
   public getCompleteTodo(): Todo[]{
     return this.alltodos.filter(onetodo => onetodo.status === true)
   }
 
-  public removeTodo(todo):todoServiceService{
-    this.alltodos = this.alltodos.filter( td => td.id != todo.id)
-    return this
+  public removeTodo(todoid:number):void{
+    this.store.dispatch({
+      type:'REMOVE_TODO',
+      payload:{id: todoid}
+    })
   }
 
 

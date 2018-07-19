@@ -27,17 +27,17 @@ export class AppComponent {
     return this.todoservice.getPendingTodo()
   } 
 
-  public toggletodo(eachtodo): void{
-    console.log(eachtodo);
-    this.todoservice.toggleTodo(eachtodo)
+  public toggletodo({eachtodoid}): void{
+    console.log(eachtodoid);
+    this.todoservice.toggleTodo(eachtodoid)
   }
 
   public get completetodo():Array<Todo>{
     return this.todoservice.getCompleteTodo()
   }
 
-  public removetodo(eachtodo):void{
-    this.todoservice.removeTodo(eachtodo)
+  public removetodo({id}):void{
+    this.todoservice.removeTodo(id)
   }
 
 }

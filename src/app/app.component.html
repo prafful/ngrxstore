@@ -3,7 +3,7 @@
             [(ngModel)]='newtodo.title' 
             (keyup.enter)="addTodoLocal()"  autofocus> {{newtodo.title}}
             <br>
-            Pending Todo: {{pendingtodo.length}}
+           Pending Todo: {{pendingtodo.length}}
             <div *ngIf="pendingtodo.length > 0 ">
                 <ul>
                     <li *ngFor="let eachtodo of pendingtodo">
@@ -17,7 +17,7 @@
                     </li>
                 </ul>
             </div>
-            Complete Todo: {{completetodo.length}}
+        <!--     Complete Todo: {{completetodo.length}}
             <div *ngIf="completetodo.length > 0 ">
                 <ul>
                     <li *ngFor="let eachtodo of completetodo">
@@ -30,4 +30,4 @@
                         <button (click)="removetodo(eachtodo)">Scrap</button>
                     </li>
                 </ul>
-            </div>
+            </div> -->
