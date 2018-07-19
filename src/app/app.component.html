@@ -2,3 +2,22 @@
 <input type="text" placeholder="Add your todo..." 
             [(ngModel)]='newtodo.title' 
             (keyup.enter)="addTodoLocal()"  autofocus>
+
+
+            <ul>
+                <li *ngFor="let eachtodo of pendingtodo">
+                    <input type="checkbox" 
+                        [checked]="eachtodo.status"
+                        (click)="toggletodo(eachtodo)"
+                        >
+                    <label>{{eachtodo.title}}</label>
+                </li>
+            </ul>
+
+
+            <ul>
+                <li *ngFor="let eachtodo of completetodo">
+                    <input type="checkbox" >
+                    <label>{{eachtodo.title}}</label>
+                </li>
+            </ul>
