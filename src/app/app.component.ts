@@ -7,15 +7,16 @@ export class AppComponent {
   title = 'app';
   newtodo : Todo = new Todo()
 
-  constructor(private todoservice : todoServiceService) {}
+  constructor(private todoservice : todoServiceService) {
+
+  }
 
   addTodoLocal = function () {
-    console.log(this.newtodo)
-    this.newtodo = new Todo()
+    //console.log(this.newtodo)
+    
     //this.todo = ""
-    this
-      .todoservice
-      .addTodo(this.newtodo)
+    this.todoservice.addTodo(this.newtodo)
+    this.newtodo = new Todo()
   }
 
    public get pendingtodo() : Array < Todo > {
@@ -23,17 +24,20 @@ export class AppComponent {
     //console.log("PENDING TODO");
     //console.log(this.todoservice.getPendingTodo());  
 
-    return this
-      .todoservice
-      .getPendingTodo()
+    return this.todoservice.getPendingTodo()
   } 
 
   public toggletodo(eachtodo): void{
+    console.log(eachtodo);
     this.todoservice.toggleTodo(eachtodo)
   }
 
   public get completetodo():Array<Todo>{
     return this.todoservice.getCompleteTodo()
+  }
+
+  public removetodo(eachtodo):void{
+    this.todoservice.removeTodo(eachtodo)
   }
 
 }

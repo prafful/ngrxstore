@@ -1,23 +1,33 @@
 <h1>Todo App With Angular Services</h1>
 <input type="text" placeholder="Add your todo..." 
             [(ngModel)]='newtodo.title' 
-            (keyup.enter)="addTodoLocal()"  autofocus>
-
-
-            <ul>
-                <li *ngFor="let eachtodo of pendingtodo">
-                    <input type="checkbox" 
+            (keyup.enter)="addTodoLocal()"  autofocus> {{newtodo.title}}
+            <br>
+            Pending Todo: {{pendingtodo.length}}
+            <div *ngIf="pendingtodo.length > 0 ">
+                <ul>
+                    <li *ngFor="let eachtodo of pendingtodo">
+                        <input type="checkbox" 
+                            [checked]="eachtodo.status"
+                            (click)="toggletodo(eachtodo)"
+                            >
+                        <label>{{eachtodo.title}}</label>
+                        &nbsp;&nbsp;
+                        <button (click)="removetodo(eachtodo)">Scrap</button>
+                    </li>
+                </ul>
+            </div>
+            Complete Todo: {{completetodo.length}}
+            <div *ngIf="completetodo.length > 0 ">
+                <ul>
+                    <li *ngFor="let eachtodo of completetodo">
+                        <input type="checkbox" 
                         [checked]="eachtodo.status"
                         (click)="toggletodo(eachtodo)"
                         >
-                    <label>{{eachtodo.title}}</label>
-                </li>
-            </ul>
-
-
-            <ul>
-                <li *ngFor="let eachtodo of completetodo">
-                    <input type="checkbox" >
-                    <label>{{eachtodo.title}}</label>
-                </li>
-            </ul>
+                        <label>{{eachtodo.title}}</label>
+                        &nbsp;&nbsp;
+                        <button (click)="removetodo(eachtodo)">Scrap</button>
+                    </li>
+                </ul>
+            </div>

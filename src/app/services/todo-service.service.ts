@@ -18,7 +18,6 @@ export class todoServiceService {
     this.alltodos.push(todo)
     console.log("from service - addtodo")
     console.log(this.alltodos)
-    console.log("hello");
     /* //console.log(this.alltodos.filter((onetodo) => {
                                                     onetodo.status === false
                                                     return onetodo
@@ -29,24 +28,27 @@ export class todoServiceService {
   public getPendingTodo():Todo[]{
     //console.log("hello");
     //console.log(this.alltodos.filter((onetodo) => {onetodo.status == false}));
-    return this.alltodos.filter((onetodo) => {
-                                              onetodo.status === false
-                                              return onetodo
-                                            })
+    return this.alltodos.filter(onetodo =>onetodo.status === false)
   }
 
-  public toggleTodo(todo:Todo): void{
+  public toggleTodo(todo:Todo){
+    console.log(todo);
     let updatedtodo = this.updatetodobyid(todo.id, {
                                                       status:!todo.status
                                                     })
+
+    console.log(updatedtodo);     
+    return updatedtodo                                      
   }
 
-  private updatetodobyid(id: number, values:Object ={}){
+  private updatetodobyid(id: number, values:Object ={}):Todo{
 
     let todo = this.gettodobyid(id)
     if(!todo){
       return null
     }
+    Object.assign(todo, values)
+    return todo
 
   }
 
@@ -55,10 +57,14 @@ export class todoServiceService {
   }
 
   public getCompleteTodo(): Todo[]{
-    return this.alltodos.filter((onetodo) => {
-                                                onetodo.status === true
-                                                return onetodo
-                                              })
+    return this.alltodos.filter(onetodo => onetodo.status === true)
   }
+
+  public removeTodo(todo):todoServiceService{
+    this.alltodos = this.alltodos.filter( td => td.id != todo.id)
+    return this
+  }
+
+
 
 }
